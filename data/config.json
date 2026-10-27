@@ -1,0 +1,61 @@
+{
+  "lat": -33.3912257,
+  "lng": -70.6419472,
+  "mapsLink": "https://maps.app.goo.gl/qQL93Sv9di4y3oRV6",
+  "address": "Stefano Pizza — ver dirección exacta en Google Maps",
+  "phone": "+56 9 0000 0000",
+  "whatsapp": "56900000000",
+  "socials": [],
+  "hours": {
+    "0": { "label": "Domingo", "open": "12:00", "close": "22:00" },
+    "1": { "label": "Lunes", "open": "12:00", "close": "22:00" },
+    "2": { "label": "Martes", "open": "12:00", "close": "22:00" },
+    "3": { "label": "Miércoles", "open": "12:00", "close": "22:00" },
+    "4": { "label": "Jueves", "open": "12:00", "close": "22:00" },
+    "5": { "label": "Viernes", "open": "12:00", "close": "23:30" },
+    "6": { "label": "Sábado", "open": "12:00", "close": "23:30" }
+  },
+  "menu": {
+    "Pizzas": {
+      "note": "Todas con masa artesanal y mozzarella. Precio Mediana / Familiar.",
+      "items": [
+        { "name": "Margarita", "desc": "Salsa de tomate, mozzarella y albahaca fresca.", "price": [7900, 11900], "tag": "clásica" },
+        { "name": "Pepperoni", "desc": "Pepperoni, mozzarella y orégano.", "price": [8900, 12900], "tag": "la favorita" },
+        { "name": "Napolitana", "desc": "Tomate en rodajas, ajo, mozzarella y albahaca.", "price": [8500, 12500] },
+        { "name": "Cuatro quesos", "desc": "Mozzarella, parmesano, queso azul y provolone.", "price": [9500, 13900] },
+        { "name": "Jamón y champiñón", "desc": "Jamón, champiñones salteados y mozzarella.", "price": [8900, 12900] },
+        { "name": "Stefano", "desc": "La de la casa: carne, cebolla caramelizada, pimentón y aceitunas.", "price": [10500, 14900], "tag": "especial" }
+      ]
+    },
+    "Entradas": {
+      "note": "Para picar mientras sale la pizza.",
+      "items": [
+        { "name": "Palitos de ajo", "desc": "Con queso gratinado y salsa de la casa.", "price": [3900] },
+        { "name": "Bruschettas", "desc": "Pan tostado, tomate, albahaca y aceite de oliva.", "price": [4500] },
+        { "name": "Papas rústicas", "desc": "Con piel, merkén y alioli.", "price": [4200] }
+      ]
+    },
+    "Bebidas": {
+      "note": "Heladitas, como corresponde.",
+      "items": [
+        { "name": "Bebida lata", "desc": "Coca-Cola, Sprite o Fanta.", "price": [1800] },
+        { "name": "Bebida 1,5 L", "desc": "Para compartir.", "price": [3200] },
+        { "name": "Cerveza", "desc": "Consulta las variedades del día.", "price": [2800] },
+        { "name": "Jugo natural", "desc": "Según fruta de temporada.", "price": [2500] }
+      ]
+    },
+    "Postres": {
+      "note": "Si queda espacio.",
+      "items": [
+        { "name": "Tiramisú", "desc": "Receta clásica, hecho en casa.", "price": [3900] },
+        { "name": "Brownie con helado", "desc": "Tibio, con helado de vainilla.", "price": [3500] }
+      ]
+    }
+  },
+  "promos": [
+    { "title": "Combo Pareja", "big": "2 pizzas", "text": "2 medianas a elección + 1 bebida 1,5 L.", "when": "Lunes a jueves" },
+    { "title": "Familiar + Palitos", "big": "Gratis", "text": "Pide una pizza familiar y llévate palitos de ajo.", "when": "Todos los días" },
+    { "title": "Retira y ahorra", "big": "-10%", "text": "Descuento si retiras en el local.", "when": "Siempre" },
+    { "title": "Noche de amigos", "big": "3x2", "text": "En pizzas personales, para la juntita.", "when": "Viernes" }
+  ]
+}

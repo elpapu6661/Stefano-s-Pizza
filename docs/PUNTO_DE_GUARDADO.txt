@@ -1,0 +1,167 @@
+PUNTO DE GUARDADO — Stefano Pizza
+==================================
+Fecha: 27/10/2026
+Versión: 1.0 (estado completo del proyecto)
+
+Este documento registra el estado exacto del sitio hasta este momento:
+estructura, funcionalidades, diseño, seguridad y pendientes.
+
+---------------------------------------------------------------
+1. ESTRUCTURA DE ARCHIVOS
+---------------------------------------------------------------
+D:\Nueva carpeta\
+├── index.html                  (10.554 bytes)
+├── css\
+│   └── styles.css              (15.050 bytes)
+├── js\
+│   └── script.js               (16.343 bytes)
+├── data\
+│   └── config.json             (3.327 bytes)
+└── docs\
+    ├── ARCHIVO_PROYECTO.txt
+    ├── PROBLEMAS_REALES.txt
+    ├── SEGURIDAD_AUDITORIA.txt
+    └── PUNTO_DE_GUARDADO.txt   (este archivo)
+
+---------------------------------------------------------------
+2. FUNCIONALIDADES IMPLEMENTADAS
+---------------------------------------------------------------
+- Sitio de una sola página (one-page) para pizzería "Stefano Pizza".
+- Hero con título, CTA "Ver la carta" y "Pedir ahora" (WhatsApp).
+- Escena animada del hero:
+  * Plato blanco fijo.
+  * Pala de acero (gris metálico) que entra deslizando desde la
+    derecha, se detiene sobre el plato y se retira.
+  * La pizza viaja montada en la pala y queda servida en el plato.
+  * En cada visita se elige aleatoriamente un tipo de pizza:
+    Margarita, Pepperoni, Napolitana, Cuatro quesos,
+    Jamón y champiñón, Stefano.
+  * Nota amarilla muestra "Hoy: [tipo de pizza]".
+- Carta dinámica por categorías (Pizzas, Entradas, Bebidas, Postres),
+  con pestañas, precios en CLP y notas.
+- Promociones generadas dinámicamente (4 tarjetas).
+- Ubicación: mapa de Google Maps embebido + tarjeta de dirección,
+  con fallback visual si el iframe no carga.
+- Contacto: WhatsApp, teléfono, horarios con día actual destacado,
+  estado "Abierto/Cerrado ahora" calculado en tiempo real y redes.
+- Menú móvil (hamburguesa) y animaciones de revelado al hacer scroll
+  (IntersectionObserver).
+- Año del footer automático.
+
+---------------------------------------------------------------
+3. DISEÑO Y ESTILOS
+---------------------------------------------------------------
+- Tipografía: 'Comic Sans MS', 'Segoe Script', 'Bradley Hand',
+  cursive en TODO el sitio, en cursiva (font-style: italic).
+- Tamaño base de lectura: html 106.25% (≈17px), line-height 1.65.
+- Paleta rústica: madera (#5a3418), crema (#f6ead2), rojo fuego
+  (#d6402a), dorado (#f2b134), verde albahaca (#4a7c3a).
+- Fondo: mesa de madera rústica con veta y juntas de tablones
+  (SVG data-URI + gradientes), con background-color sólido de
+  fallback (--wood-mid).
+- Estilo artesanal: tarjetas rotadas, cintas adhesivas, pizarra,
+  notas kraft, sombras profundas. NO es minimalista.
+- Estilo "sucio"/grunge eliminado por completo.
+- Animaciones: entrada y retirada de la pala, brillo del queso,
+  vapor sobre la pizza, flotación suave, revelado al scroll.
+- Respeta prefers-reduced-motion:reduce (accesibilidad).
+
+---------------------------------------------------------------
+4. SEGURIDAD (estado actual)
+---------------------------------------------------------------
+- Content-Security-Policy en index.html:
+  default-src 'self'; script-src 'self';
+  style-src 'self' https://fonts.googleapis.com;
+  font-src 'self' https://fonts.gstatic.com;
+  img-src 'self' data:;
+  frame-src https://maps.google.com https://www.google.com;
+  connect-src 'self'; object-src 'none'; base-uri 'self';
+  frame-ancestors 'none'.
+- X-Content-Type-Options: nosniff.
+- Referrer-Policy: no-referrer.
+- Iframe de Google Maps con sandbox y referrerpolicy="no-referrer".
+- Enlaces target="_blank" con rel="noopener".
+- Sin innerHTML inseguro: renderizado con createElement y
+  textContent (previene XSS).
+- Atributo integrity en Google Fonts fue retirado junto con el
+  enlace externo (ya no se usan fuentes de Google).
+- Resultado auditoría: 10 ataques simulados; 8 resueltos/mitigados,
+  2 aceptados como riesgo bajo (datos de ejemplo y config público).
+
+---------------------------------------------------------------
+5. CONFIGURACIÓN EDITABLE (data/config.json)
+---------------------------------------------------------------
+Contiene:
+- lat / lng / mapsLink (ubicación).
+- address, phone, whatsapp, socials.
+- hours: horario por día (0=domingo … 6=sábado).
+- menu: categorías con items (name, desc, price[], tag).
+- promos: title, big, text, when.
+
+La app carga este JSON con fetch("data/config.json").
+Si falla (por ejemplo al abrir con file://), usa DEFAULT_CONFIG
+embebido en js/script.js como fallback.
+
+IMPORTANTE: teléfono, WhatsApp, dirección y coordenadas son datos
+de ejemplo. Reemplazar antes de publicar en producción.
+
+---------------------------------------------------------------
+6. DOCUMENTACIÓN EXISTENTE
+---------------------------------------------------------------
+- docs/ARCHIVO_PROYECTO.txt: funcionamiento, arquitectura,
+  seguridad y últimos cambios.
+- docs/PROBLEMAS_REALES.txt: deuda técnica, bugs y riesgos con
+  su estado actualizado.
+- docs/SEGURIDAD_AUDITORIA.txt: detalle de los 10 ataques
+  simulados con resultados y veredictos.
+- docs/PUNTO_DE_GUARDADO.txt: este resumen del estado.
+
+---------------------------------------------------------------
+7. HISTORIAL DE CAMBIOS (resumen de la sesión)
+---------------------------------------------------------------
+1) Se mejoró el estilo de la pizza del hero (más detalle).
+2) Se probó y luego eliminó el estilo "sucio"/grunge.
+3) Página rediseñada con estilo rústico no minimalista.
+4) Auditoría de seguridad y correcciones (CSP, sandbox,
+   nosniff, no-referrer, DOM seguro, noopener).
+5) Archivos reorganizados en subcarpetas (css, js, data, docs).
+6) Fuente del título cambiada a Comic Sans MS.
+7) Bugs de PROBLEMAS_REALES.txt resueltos:
+   - Datos movidos a data/config.json con fetch + fallback.
+   - Fallback visual del mapa.
+   - Fallback de color de fondo para navegadores antiguos.
+8) Tipografía completa en cursiva y tamaño de lectura (17px).
+9) Hero rediseñado: pala de pizza (luego de acero gris) con
+   pizza aleatoria por visita.
+10) Pala de acero que entra desde la derecha y deja la pizza
+    en un plato blanco.
+
+---------------------------------------------------------------
+8. VERIFICACIONES REALIZADAS
+---------------------------------------------------------------
+- node --check js/script.js  → sin errores de sintaxis.
+- Grep de referencias obsoletas (Oswald, Lora, Caveat, grunge,
+  pizza-svg, woodPeel, peelEnter…) → sin coincidencias.
+- Rutas de index.html apuntan a css/styles.css, js/script.js y
+  data/config.json correctamente.
+
+---------------------------------------------------------------
+9. PENDIENTES / PRÓXIMOS PASOS
+---------------------------------------------------------------
+- Reemplazar datos de ejemplo de data/config.json por datos reales.
+- Reemplazar / verificar enlaces de redes sociales y teléfono.
+- Definir si se desea publicar en un hosting con HTTPS y cabeceras
+  HTTP reales (CSP, X-Frame-Options, HSTS) además de las meta tags.
+- Opcional: optimizar imágenes/ilustraciones para producción.
+- Opcional: agregar favicon y Open Graph para compartir en redes.
+
+---------------------------------------------------------------
+10. CÓMO EJECUTAR
+---------------------------------------------------------------
+- Abrir index.html directamente en el navegador (file://).
+  Nota: fetch de data/config.json puede fallar en file:// y se
+  usará DEFAULT_CONFIG; para probar la carga del JSON, servir la
+  carpeta con un servidor local (ej. python -m http.server).
+- No requiere build ni dependencias (HTML/CSS/JS puro).
+
+FIN DEL PUNTO DE GUARDADO

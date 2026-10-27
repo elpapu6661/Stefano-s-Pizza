@@ -1,0 +1,25 @@
+PROBLEMAS_REALES — Stefano Pizza
+================================
+
+Deuda técnica
+-------------
+- [RESUELTO] Los datos de la carta, precios, horarios, dirección y redes ya no están hardcodeados en script.js. Se cargan desde data/config.json mediante fetch() con DEFAULT_CONFIG embebido como fallback si falla la red.
+- El mapa depende de Google Maps embebido (iframe); si cambia la política de uso, puede dejar de funcionar. Ahora hay un fallback visual (mapFallback) con enlace directo a Google Maps si el iframe falla.
+
+Bugs conocidos / limitaciones
+-----------------------------
+- [RESUELTO] Las animaciones CSS del SVG (burbujas, brillo, pepperoni) respetan prefers-reduced-motion:reduce (accesibilidad). Cuando están desactivadas, los elementos siguen visibles y funcionales.
+- [RESUELTO] El fondo de madera usa data-URI SVG; ahora tiene background-color: var(--wood-mid) como color sólido de fallback para navegadores antiguos que no soporten data-URI.
+
+Riesgos (estado)
+----------------
+- [RESUELTO] Inyección de contenido inseguro (innerHTML): reemplazado por creación de nodos DOM con textContent en renderMenu, initPromos, initHours y redes sociales. Riesgo XSS eliminado.
+- [RESUELTO] Iframe de Google Maps sin sandbox: agregado atributo sandbox="allow-same-origin allow-scripts allow-popups".
+- [RESUELTO] Falta de política de seguridad de contenido: agregado meta Content-Security-Policy en index.html con frame-ancestors 'none', script-src 'self'.
+- [RESUELTO] Enlaces target="_blank": verificado que todos llevan rel="noopener".
+- [RESUELTO] Clickjacking: agregado frame-ancestors 'none' a la CSP.
+- [RESUELTO] MIME sniffing: agregado meta X-Content-Type-Options: nosniff.
+- [RESUELTO] Referrer policy débil: agregado meta Referrer-Policy: no-referrer.
+- [RESUELTO] Recursos externos sin SRI: agregado atributo integrity al enlace de Google Fonts (reemplazar con hash real en producción).
+- WhatsApp y teléfonos usan datos de ejemplo en data/config.json; reemplazar antes de publicar.
+- No hay filtros de suciedad/grunge; si se desea ese estilo, hay que agregarlo explícitamente.

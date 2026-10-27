@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title style="font-family: 'Comic Sans MS', 'Segoe Script', 'Bradley Hand', cursive; font-style: italic;">Stefano Pizza | Pizzería</title>
+  <meta name="description" content="Stefano Pizza: mira nuestra carta, precios, ubicación y formas de contacto.">
+  <meta name="theme-color" content="#3b2414">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; frame-src https://maps.google.com https://www.google.com; connect-src 'self'; object-src 'none'; base-uri 'self'; frame-ancestors 'none';">
+  <meta http-equiv="X-Content-Type-Options" content="nosniff">
+  <meta name="referrer" content="no-referrer">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- NAVEGACIÓN -->
+  <header class="topbar">
+    <a href="#inicio" class="brand" aria-label="Stefano Pizza, inicio">
+      <span class="brand-dot"></span> Stefano <em>Pizza</em>
+    </a>
+    <button class="burger" id="burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span><span></span></button>
+    <nav id="nav" class="nav">
+      <a href="#carta">Carta</a>
+      <a href="#promos">Promos</a>
+      <a href="#ubicacion">Ubicación</a>
+      <a href="#contacto">Contacto</a>
+      <span class="open-badge" id="openBadge" hidden></span>
+    </nav>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section id="inicio" class="hero">
+      <div class="sign reveal">
+        <p class="sign-small">Pizzería</p>
+        <h1>Stefano<br><span>Pizza</span></h1>
+        <p class="sign-tag">Pizza para compartir, como en la mesa de siempre.</p>
+        <div class="hero-cta">
+          <a href="#carta" class="btn btn-fire">Ver la carta</a>
+          <a href="#contacto" class="btn btn-ghost" id="heroOrder">Pedir ahora</a>
+        </div>
+      </div>
+
+      <div class="board reveal" aria-hidden="true">
+        <svg viewBox="0 0 500 400" class="peel-svg" role="img" aria-label="Pala de acero sirviendo pizza en un plato">
+          <defs>
+            <linearGradient id="steel" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#eef1f3"/><stop offset="45%" stop-color="#b9c0c6"/><stop offset="100%" stop-color="#7d858c"/>
+            </linearGradient>
+            <linearGradient id="steelInner" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" stop-color="#d5dade"/><stop offset="100%" stop-color="#9aa2a9"/>
+            </linearGradient>
+            <linearGradient id="steelDark" x1="0%" y1="0%" x2="0%" y2="100%">
+              <stop offset="0%" stop-color="#9aa2a9"/><stop offset="50%" stop-color="#6b737a"/><stop offset="100%" stop-color="#4d5359"/>
+            </linearGradient>
+            <radialGradient id="plateRim" cx="50%" cy="45%" r="55%">
+              <stop offset="70%" stop-color="#ffffff"/><stop offset="100%" stop-color="#d9d9d4"/>
+            </radialGradient>
+            <radialGradient id="plateInner" cx="48%" cy="42%" r="60%">
+              <stop offset="0%" stop-color="#ffffff"/><stop offset="85%" stop-color="#f4f4f0"/><stop offset="100%" stop-color="#e6e6e1"/>
+            </radialGradient>
+            <radialGradient id="crust" cx="50%" cy="50%" r="50%">
+              <stop offset="78%" stop-color="#e8a85c"/><stop offset="100%" stop-color="#b3601f"/>
+            </radialGradient>
+            <radialGradient id="cheeseMelt" cx="45%" cy="40%" r="65%">
+              <stop offset="0%" stop-color="#fff3b0"/><stop offset="55%" stop-color="#f0c45a"/><stop offset="100%" stop-color="#e8a81d"/>
+            </radialGradient>
+            <radialGradient id="cheeseShine" cx="50%" cy="50%" r="50%">
+              <stop offset="0%" stop-color="#fff" stop-opacity=".55"/><stop offset="100%" stop-color="#fff" stop-opacity="0"/>
+            </radialGradient>
+            <filter id="soft-shadow" x="-25%" y="-25%" width="150%" height="150%">
+              <feGaussianBlur in="SourceAlpha" stdDeviation="4" result="blur"/>
+              <feOffset in="blur" dx="2" dy="4" result="offsetBlur"/>
+              <feComponentTransfer><feFuncA type="linear" slope="0.4"/></feComponentTransfer>
+              <feMerge><feMergeNode in="offsetBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+            </filter>
+          </defs>
+
+          <!-- sombra y plato blanco -->
+          <ellipse cx="250" cy="262" rx="148" ry="140" fill="rgba(0,0,0,.35)" filter="url(#soft-shadow)"/>
+          <circle cx="250" cy="250" r="148" fill="url(#plateRim)"/>
+          <circle cx="250" cy="250" r="136" fill="url(#plateInner)"/>
+          <circle cx="250" cy="250" r="136" fill="none" stroke="#cfcfc9" stroke-width="2"/>
+
+          <!-- pala de acero (animada: entra desde la derecha y se retira) -->
+          <g class="peel-steel">
+            <!-- mango -->
+            <rect x="470" y="234" width="46" height="32" rx="16" fill="url(#steelDark)"/>
+            <rect x="378" y="237" width="104" height="26" rx="13" fill="url(#steelDark)"/>
+            <!-- cabeza de la pala -->
+            <ellipse cx="250" cy="250" rx="145" ry="148" fill="url(#steel)"/>
+            <ellipse cx="250" cy="250" rx="132" ry="135" fill="url(#steelInner)"/>
+            <ellipse cx="250" cy="250" rx="132" ry="135" fill="none" stroke="#eef1f3" stroke-width="3" opacity=".55"/>
+            <!-- brillo metálico -->
+            <path d="M130 205 Q250 100 370 205" stroke="#ffffff" stroke-width="6" fill="none" opacity=".35" stroke-linecap="round"/>
+            <path d="M150 320 Q250 375 350 320" stroke="#ffffff" stroke-width="4" fill="none" opacity=".18" stroke-linecap="round"/>
+            <!-- remaches en la unión -->
+            <circle cx="378" cy="241" r="4" fill="#e8ecef"/>
+            <circle cx="378" cy="259" r="4" fill="#e8ecef"/>
+          </g>
+
+          <!-- pizza (animada: viaja sobre la pala y queda en el plato) -->
+          <g class="pizza-on-peel">
+            <circle cx="250" cy="250" r="128" fill="url(#crust)" filter="url(#soft-shadow)"/>
+            <circle cx="250" cy="250" r="115" fill="#c8422a"/>
+            <circle cx="250" cy="250" r="108" fill="url(#cheeseMelt)"/>
+            <ellipse class="cheese-shine" cx="210" cy="205" rx="82" ry="62" transform="rotate(-20 210 205)" fill="url(#cheeseShine)" opacity=".5"/>
+            <g id="pizzaToppings"></g>
+          </g>
+        </svg>
+        <span class="sticky sticky-yellow" id="pizzaSticky">¡Siempre<br>caliente!</span>
+      </div>
+    </section>
+
+    <!-- CARTA -->
+    <section id="carta" class="section menu-section">
+      <div class="section-title reveal">
+        <span class="hand">lo que sale de la cocina</span>
+        <h2>La carta</h2>
+      </div>
+
+      <div class="chalkboard reveal">
+        <div class="tabs" id="tabs" role="tablist" aria-label="Categorías de la carta"></div>
+        <ul class="menu-list" id="menuList"></ul>
+        <p class="chalk-note" id="menuNote"></p>
+      </div>
+
+      <aside class="kraft kraft-left reveal">
+        <span class="tape"></span>
+        <h3>Ojo con esto</h3>
+        <p>Pregunta por los ingredientes del día y por opciones sin alguno de ellos. Las pizzas se pueden armar a tu gusto.</p>
+      </aside>
+
+      <aside class="kraft kraft-right reveal">
+        <span class="tape"></span>
+        <h3>¿Para cuántos?</h3>
+        <ul class="size-list">
+          <li><b>Personal</b> para uno</li>
+          <li><b>Mediana</b> para dos con hambre</li>
+          <li><b>Familiar</b> para la mesa completa</li>
+        </ul>
+      </aside>
+    </section>
+
+    <!-- PROMOS -->
+    <section id="promos" class="section promos">
+      <div class="section-title reveal">
+        <span class="hand">para ahorrar y comer más</span>
+        <h2>Promos</h2>
+      </div>
+      <div class="promo-grid" id="promoGrid"></div>
+    </section>
+
+    <!-- UBICACIÓN -->
+    <section id="ubicacion" class="section location">
+      <div class="section-title reveal">
+        <span class="hand">ven a visitarnos</span>
+        <h2>Dónde estamos</h2>
+      </div>
+
+      <div class="loc-wrap">
+        <figure class="photo reveal">
+          <span class="tape"></span>
+          <iframe id="mapFrame" title="Mapa de ubicación de Stefano Pizza" loading="lazy" referrerpolicy="no-referrer" allowfullscreen sandbox="allow-same-origin allow-scripts allow-popups"></iframe>
+          <div id="mapFallback" class="map-fallback" hidden>
+            <p>Mapa no disponible.</p>
+            <a href="https://maps.google.com" target="_blank" rel="noopener" class="btn btn-fire">Abrir Google Maps</a>
+          </div>
+          <figcaption>Stefano Pizza en el mapa</figcaption>
+        </figure>
+
+        <div class="address-card reveal">
+          <h3>Dirección</h3>
+          <p class="address" id="addressText"></p>
+          <a class="btn btn-fire" id="dirBtn" target="_blank" rel="noopener">Cómo llegar</a>
+          <p class="small">Se abre en Google Maps.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section contact">
+      <div class="section-title reveal">
+        <span class="hand">escríbenos o llámanos</span>
+        <h2>Contacto</h2>
+      </div>
+
+      <div class="contact-grid">
+        <article class="note note-a reveal">
+          <h3>Pide por WhatsApp</h3>
+          <p>Cuéntanos qué se te antoja y te lo preparamos.</p>
+          <a class="btn btn-fire" id="waBtn" target="_blank" rel="noopener">Abrir WhatsApp</a>
+        </article>
+
+        <article class="note note-b reveal">
+          <h3>Llámanos</h3>
+          <p class="big-phone" id="phoneText"></p>
+          <a class="btn btn-ghost-dark" id="callBtn">Llamar</a>
+        </article>
+
+        <article class="note note-c reveal">
+          <h3>Horarios</h3>
+          <ul class="hours" id="hoursList"></ul>
+        </article>
+
+        <article class="note note-d reveal">
+          <h3>Síguenos</h3>
+          <p id="socialLinks" class="socials"></p>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <p>© <span id="year"></span> Stefano Pizza · Hecho con ganas, masa y queso.</p>
+    <a href="#inicio">Volver arriba ↑</a>
+  </footer>
+
+  <script src="js/script.js" defer></script>
+</body>
+</html>

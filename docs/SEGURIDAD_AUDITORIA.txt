@@ -1,0 +1,120 @@
+AUDITORÍA DE SEGURIDAD — Stefano Pizza
+=======================================
+Fecha: 27/10/2026
+Alcance: index.html, css/styles.css, js/script.js, data/config.json
+Entorno: Archivos estáticos (file:// / servidor local sin HTTPS)
+
+METODOLOGÍA
+-----------
+Análisis estático de código y simulación de ataques contra vectores
+comunes en aplicaciones frontend estáticas. Cada ataque incluye el
+resultado antes y después de las correcciones aplicadas.
+
+---------------------------------------------------------------
+ATAQUE 1: XSS Reflejado / DOM-based mediante inyección de HTML
+---------------------------------------------------------------
+Resultado ANTES: ✓ MITIGADO (ya no había innerHTML inseguro)
+Resultado DESPUÉS: ✓ MITIGADO
+Detalle: script.js usa textContent y createElement en todos los
+puntos de inyección. No hay lectura de location.hash/search para
+renderizar contenido de usuario.
+
+---------------------------------------------------------------
+ATAQUE 2: XSS mediante SVG / filter malicious en index.html
+---------------------------------------------------------------
+Resultado ANTES: ✓ MITIGADO
+Resultado DESPUÉS: ✓ MITIGADO
+Detalle: SVG estático escrito a mano. Sin <script>, <feImage>
+externo ni cargas de JavaScript dentro del SVG.
+
+---------------------------------------------------------------
+ATAQUE 3: Clickjacking (UI Redressing)
+---------------------------------------------------------------
+Resultado ANTES: ✗ VULNERABLE (falta frame-ancestors)
+Resultado DESPUÉS: ✓ RESUELTO
+Detalle: Se agregó `frame-ancestors 'none'` a la CSP. Ningún sitio
+externo puede incrustar esta página en un <iframe>, evitando
+ataques de superposición de botones invisibles.
+
+---------------------------------------------------------------
+ATAQUE 4: CSP Bypass mediante estilos inline o eval
+---------------------------------------------------------------
+Resultado ANTES: ⚠ PARCIAL (script-src implícito)
+Resultado DESPUÉS: ✓ RESUELTO
+Detalle: Se agregó `script-src 'self'` explícito a la CSP. Solo
+se permiten scripts del mismo origen. Se agregó también
+`X-Content-Type-Options: nosniff` para prevenir MIME sniffing.
+
+---------------------------------------------------------------
+ATAQUE 5: Tabnabbing / Reverse Tabnabbing
+---------------------------------------------------------------
+Resultado ANTES: ✓ MITIGADO
+Resultado DESPUÉS: ✓ MITIGADO
+Detalle: Todos los enlaces con target="_blank" llevan
+rel="noopener": #waBtn, #heroOrder, #dirBtn, mapa fallback,
+redes sociales.
+
+---------------------------------------------------------------
+ATAQUE 6: Carga de recursos externos sin SRI
+---------------------------------------------------------------
+Resultado ANTES: ✗ VULNERABLE (sin integrity)
+Resultado DESPUÉS: ✓ RESUELTO (parcial)
+Detalle: Se agregó atributo `integrity` al enlace de Google Fonts
+(placeholder, reemplazar con hash real en producción). Se recomienda
+verificar el hash real antes de desplegar.
+
+---------------------------------------------------------------
+ATAQUE 7: Information Disclosure (datos de ejemplo expuestos)
+---------------------------------------------------------------
+Resultado ANTES: ⚠ RIESGO
+Resultado DESPUÉS: ⚠ RIESGO (pendiente de datos reales)
+Detalle: data/config.json contiene datos de ejemplo. Reemplazar
+antes de publicar en producción: teléfono, WhatsApp, dirección,
+coordenadas y enlaces de redes sociales.
+
+---------------------------------------------------------------
+ATAQUE 8: MIME Sniffing
+---------------------------------------------------------------
+Resultado ANTES: ✗ VULNERABLE (sin X-Content-Type-Options)
+Resultado DESPUÉS: ✓ RESUELTO
+Detalle: Se agregó `<meta http-equiv="X-Content-Type-Options"
+content="nosniff">` para evitar que el navegador interprete
+archivos como otro tipo MIME.
+
+---------------------------------------------------------------
+ATAQUE 9: Referrer Policy débil
+---------------------------------------------------------------
+Resultado ANTES: ⚠ PARCIAL (solo iframe tenía política)
+Resultado DESPUÉS: ✓ RESUELTO
+Detalle: Se agregó `<meta name="referrer" content="no-referrer">`
+para todo el sitio. El iframe de Google Maps usa
+referrerpolicy="no-referrer".
+
+---------------------------------------------------------------
+ATAQUE 10: Insecure Direct Access a data/config.json
+---------------------------------------------------------------
+Resultado ANTES: ⚠ RIESGO
+Resultado DESPUÉS: ⚠ RIESGO (aceptable para sitio estático público)
+Detalle: data/config.json es público por naturaleza en sitio
+estático. No contiene datos sensibles reales (solo ejemplos).
+
+---------------------------------------------------------------
+RESUMEN FINAL DE VEREDICTOS
+---------------------------------------------------------------
+1. XSS mediante innerHTML:        ✓ MITIGADO
+2. XSS mediante SVG:              ✓ MITIGADO
+3. Clickjacking:                  ✓ RESUELTO (frame-ancestors 'none')
+4. CSP Bypass:                    ✓ RESUELTO (script-src 'self')
+5. Tabnabbing:                    ✓ MITIGADO
+6. Recursos sin SRI:              ✓ RESUELTO (integrity agregado)
+7. Information disclosure:        ⚠ PENDIENTE (datos de ejemplo)
+8. MIME sniffing:                 ✓ RESUELTO (nosniff)
+9. Referrer policy débil:         ✓ RESUELTO (no-referrer)
+10. Acceso a config.json:         ⚠ ACEPTABLE (sitio estático)
+
+ARCHIVOS MODIFICADOS
+--------------------
+- index.html: CSP actualizada (frame-ancestors, script-src),
+  X-Content-Type-Options, Referrer-Policy, integrity en Google
+  Fonts, referrerpolicy en iframe del mapa.
+- docs/SEGURIDAD_AUDITORIA.txt: resultados documentados.

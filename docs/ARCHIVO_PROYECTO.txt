@@ -1,0 +1,38 @@
+ARCHIVO_PROYECTO — Stefano Pizza (Pizzería)
+==========================================
+
+Funcionamiento
+--------------
+Sitio web de una pizzería artesanal de una sola página (index.html) con:
+- Hero con título "Stefano Pizza", botones de CTA (ver carta / pedir por WhatsApp) y una escena animada: una pala de acero entra desde la derecha, deja una pizza sobre un plato blanco y se retira. En cada visita se elige aleatoriamente un tipo de pizza (Margarita, Pepperoni, Napolitana, Cuatro quesos, Jamón y champiñón o Stefano) y se dibujan sus ingredientes en el SVG.
+- Carta renderizada dinámicamente desde data/config.json (cargada vía fetch con fallback embebido).
+- Promociones generadas desde data/config.json.
+- Ubicación con mapa embebido de Google Maps y tarjeta de dirección, con fallback visual si el iframe falla.
+- Contacto: WhatsApp, teléfono, horarios de apertura y redes sociales.
+- Animación de revelado al hacer scroll (IntersectionObserver) y menú móvil.
+
+Arquitectura
+------------
+- index.html: estructura y contenido (incluye la escena SVG de pala de acero + plato blanco + pizza en el hero, meta CSP, X-Content-Type-Options, Referrer-Policy, iframe con sandbox y script con defer).
+- css/styles.css: estilos visuales, fondo de mesa de madera rústica con color sólido de fallback, sombras profundas, rotaciones, gradientes y animaciones (pala que entra desde la derecha, pausa para depositar la pizza y retirada, vapor, brillo del queso).
+- js/script.js: carga de configuración desde data/config.json, generación aleatoria de la pizza de la pala, renderizado de carta/promos, horarios, estado abierto/cerrado, WhatsApp, mapa y navegación móvil. Renderizado seguro sin innerHTML.
+- data/config.json: datos de la pizzería (carta, precios, horarios, dirección, redes, promos) en formato JSON, editables sin tocar el código JS.
+- docs/: documentación del proyecto (ARCHIVO_PROYECTO.txt, PROBLEMAS_REALES.txt, SEGURIDAD_AUDITORIA.txt).
+
+Seguridad
+---------
+- Content-Security-Policy configurada: default-src 'self', script-src 'self', frame-ancestors 'none', object-src 'none', base-uri 'self'.
+- X-Content-Type-Options: nosniff.
+- Referrer-Policy: no-referrer.
+- Iframe de Google Maps con sandbox y referrerpolicy="no-referrer".
+- Enlaces externos con rel="noopener".
+- Eliminado innerHTML inseguro; todo el contenido se inyecta mediante DOM API y textContent.
+- Atributo integrity en enlace de Google Fonts (reemplazar con hash real en producción).
+
+Últimos cambios
+---------------
+- Eliminado el estilo "sucio" (grasa, polvo, rasguños, filtros de tinta grunge) de styles.css.
+- SVG de la pizza rediseñado con animaciones CSS.
+- Configuración movida de script.js a data/config.json con carga vía fetch y fallback embebido.
+- Fallback visual agregado para el mapa si el iframe de Google Maps falla.
+- Mejoras de seguridad aplicadas (CSP completa, sandbox, DOM seguro, X-Content-Type-Options, Referrer-Policy, SRI).
